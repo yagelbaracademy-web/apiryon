@@ -57,14 +57,14 @@
   overlay.setAttribute('aria-label','תצוגת תכשיט מוגדלת');
   overlay.innerHTML =
     '<button class="lb-close" type="button" aria-label="סגירה">' +
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg>' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg>' +
     '</button>' +
     '<button class="lb-prev" type="button" aria-label="התכשיט הקודם">' +
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>' +
     '</button>' +
     '<figure class="lb-figure"><img class="lb-img" alt=""><figcaption class="lb-caption"></figcaption></figure>' +
     '<button class="lb-next" type="button" aria-label="התכשיט הבא">' +
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>' +
     '</button>' +
     '<div class="lb-counter"></div>';
   document.body.appendChild(overlay);
@@ -117,6 +117,23 @@
   prevBtn.addEventListener('click', function(){ show(currentIndex - 1); });
   nextBtn.addEventListener('click', function(){ show(currentIndex + 1); });
   overlay.addEventListener('click', function(e){ if(e.target === overlay) closeLightbox(); });
+
+  /* touch swipe (RTL: swipe left = next, swipe right = prev) */
+  var touchStartX = 0, touchStartY = 0, touchActive = false;
+  overlay.addEventListener('touchstart', function(e){
+    if(e.touches.length !== 1) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchActive = true;
+  }, {passive:true});
+  overlay.addEventListener('touchend', function(e){
+    if(!touchActive) return;
+    touchActive = false;
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    var dy = e.changedTouches[0].clientY - touchStartY;
+    if(Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+    if(dx < 0){ show(currentIndex + 1); } else { show(currentIndex - 1); }
+  }, {passive:true});
 
   document.querySelectorAll('.gallery-grid, .feat-grid').forEach(function(grid){
     var thumbs = Array.prototype.slice.call(grid.querySelectorAll('.thumb'));
