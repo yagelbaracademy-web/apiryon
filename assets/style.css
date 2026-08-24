@@ -69,9 +69,12 @@ nav.primary > a:hover,nav.primary > a:focus-visible{border-bottom-color:var(--ro
 .btn-ghost:hover,.btn-ghost:focus-visible{border-color:var(--royal);box-shadow:0 8px 18px rgba(20,25,50,.1);}
 .btn-line{border:none;padding:6px 0;border-bottom:1px solid var(--ink);border-radius:0;box-shadow:none;}
 .btn-line:hover,.btn-line:focus-visible{border-color:var(--royal);color:var(--royal);transform:none;}
-.btn-whatsapp{background:#25D366;box-shadow:0 6px 16px rgba(37,211,102,.32);}
-.btn-whatsapp:hover,.btn-whatsapp:focus-visible{background:#1ebc59;box-shadow:0 10px 22px rgba(37,211,102,.38);}
-.btn-whatsapp svg{width:20px;height:20px;flex:none;}
+.btn-whatsapp{
+  background:#fff;color:var(--royal);border-color:var(--line);box-shadow:0 2px 8px rgba(20,25,50,.06);
+  padding:11px 22px;font-size:12.5px;
+}
+.btn-whatsapp:hover,.btn-whatsapp:focus-visible{border-color:var(--royal);box-shadow:0 8px 18px rgba(20,25,50,.1);}
+.btn-whatsapp svg{width:15px;height:15px;flex:none;color:#25D366;}
 
 .nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px;}
 .nav-toggle svg{width:24px;height:24px;}
